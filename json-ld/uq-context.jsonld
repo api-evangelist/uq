@@ -1,0 +1,70 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "uq": "https://www.uq.edu.au/ns#",
+    "name": "name",
+    "description": "description",
+    "url": "url",
+    "sameAs": "sameAs",
+    "foundingDate": "foundingDate",
+    "location": "location",
+    "department": "department",
+    "publishingPrinciples": "publishingPrinciples",
+    "subOrganization": "subOrganization",
+    "library": {
+      "@id": "uq:library",
+      "@type": "@id"
+    },
+    "repository": {
+      "@id": "uq:repository",
+      "@type": "@id"
+    },
+    "api": {
+      "@id": "uq:api",
+      "@type": "@id"
+    },
+    "humanURL": {
+      "@id": "url",
+      "@type": "@id"
+    },
+    "baseURL": {
+      "@id": "uq:baseURL",
+      "@type": "@id"
+    },
+    "metadataFormat": "uq:metadataFormat",
+    "record": "uq:record",
+    "dataset": "Dataset",
+    "researchOutput": "uq:researchOutput"
+  },
+  "@type": "CollegeOrUniversity",
+  "@id": "https://www.uq.edu.au/",
+  "name": "The University of Queensland",
+  "url": "https://www.uq.edu.au/",
+  "description": "Public research university in Brisbane, Australia. Its public API footprint centres on UQ eSpace, the institutional digital repository, which exposes an OAI-PMH metadata harvesting endpoint and a documented eSpace REST API.",
+  "sameAs": [
+    "https://github.com/uqlibrary",
+    "https://au.linkedin.com/school/university-of-queensland/",
+    "https://espace.library.uq.edu.au/"
+  ],
+  "location": {
+    "@type": "Place",
+    "name": "Brisbane, Queensland, Australia"
+  },
+  "subOrganization": {
+    "@type": "Library",
+    "name": "The University of Queensland Library",
+    "url": "https://web.library.uq.edu.au/",
+    "department": {
+      "@type": "DigitalDocument",
+      "name": "UQ eSpace",
+      "description": "Institutional digital repository of UQ research publications, theses, and datasets, built on the Fez/Fedora platform.",
+      "url": "https://espace.library.uq.edu.au/",
+      "api": {
+        "@type": "WebAPI",
+        "name": "UQ eSpace OAI-PMH",
+        "baseURL": "https://espace.library.uq.edu.au/oai.php",
+        "metadataFormat": "oai_dc"
+      }
+    }
+  }
+}

@@ -86,6 +86,10 @@ common:
     url: finops/uq-finops.yml
   - type: Review
     url: review.yml
+  - type: x-json-ld
+    url: json-ld/uq-context.jsonld
+  - type: x-blogs
+    url: blogs/blogs.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
