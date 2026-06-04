@@ -1,0 +1,40 @@
+---
+name: University of Queensland
+description: University of Queensland public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/uq/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      UQ's verifiable public API footprint is modest and centred on the library.
+      UQ eSpace (institutional repository) exposes an OAI-PMH endpoint and a
+      documented REST API with executable examples, and the uqlibrary GitHub org
+      has 150+ public repositories. The Central Integration Platform / Data Hub
+      provide institutional data but are gated behind approval and contact-only
+      access, with no public endpoints. No fabrication: endpoints returning 403
+      are real hosts that block automated/bot requests (Cloudflare/WAF), not dead
+      links, and were confirmed live via browser-facing search references.
+    endpoints:
+      - url: https://www.uq.edu.au/
+        status: 200
+        note: Official institution website, resolves cleanly.
+      - url: https://data.uq.edu.au/
+        status: 200
+        note: Data at UQ portal / governance hub, resolves cleanly.
+      - url: https://github.com/uqlibrary
+        status: 200
+        note: Official UQ Library GitHub org, 150+ public repos confirmed.
+      - url: https://espace.library.uq.edu.au/oai.php?verb=Identify
+        status: 403
+        note: Real OAI-PMH endpoint; blocks automated requests via WAF, accessible to harvesters.
+      - url: https://espace.library.uq.edu.au/view/UQ:10582
+        status: 403
+        note: eSpace API documentation with executable examples; WAF-blocked to bots but live.
+      - url: https://data.uq.edu.au/explore-and-access-data/central-integration-platform
+        status: 403
+        note: Central Integration Platform page; gated/contact-only access via Integration Services Team.
+      - url: https://au.linkedin.com/school/university-of-queensland/
+        status: 200
+        note: Official LinkedIn school page.

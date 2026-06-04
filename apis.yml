@@ -1,0 +1,91 @@
+---
+aid: uq
+name: University of Queensland
+description: >-
+  The University of Queensland (UQ) is a public research university in Brisbane,
+  Australia, ranked #54 in the QS World University Rankings 2025. UQ's public
+  developer and API footprint is concentrated in its library and research
+  infrastructure: UQ eSpace, the institutional digital repository (built on the
+  Fez/Fedora platform), exposes an OAI-PMH metadata harvesting endpoint and a
+  documented REST API with executable examples. The UQ Library maintains an
+  active public GitHub organisation (uqlibrary) with 150+ repositories. Broader
+  institutional/transactional data access is governed through the Central
+  Integration Platform and Data Hub, which are gated and require approval rather
+  than offering open self-service APIs.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/uq/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Library
+  - Institutional Repository
+  - Open Data
+  - Australia
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: uq:espace-oai
+    name: UQ eSpace OAI-PMH
+    description: >-
+      OAI-PMH metadata harvesting interface for UQ eSpace, the University of
+      Queensland's institutional digital repository of research publications,
+      theses, and datasets. Supports standard OAI-PMH verbs (Identify,
+      ListRecords, ListMetadataFormats, GetRecord) for harvesting scholarly
+      metadata.
+    humanURL: https://espace.library.uq.edu.au/
+    baseURL: https://espace.library.uq.edu.au/oai.php
+    tags: [ Library, Institutional Repository, OAI-PMH, Metadata, Research ]
+    properties:
+      - type: Documentation
+        url: https://espace.library.uq.edu.au/about
+  - aid: uq:espace-api
+    name: UQ eSpace REST API
+    description: >-
+      REST API for UQ eSpace providing programmatic access to research outputs
+      and dataset records held in the repository. UQ Library has published API
+      documentation with executable examples describing the available endpoints.
+    humanURL: https://espace.library.uq.edu.au/view/UQ:10582
+    tags: [ Library, Institutional Repository, REST, Research, Datasets ]
+    properties:
+      - type: Documentation
+        url: https://espace.library.uq.edu.au/view/UQ:10582
+      - type: GitHub
+        url: https://github.com/uqlibrary
+  - aid: uq:central-integration
+    name: Central Integration Platform
+    description: >-
+      UQ's API platform for transactional and business data, used to integrate
+      institutional systems. Access is not open or self-service; developers must
+      request access via the Integration Services Team and complete the relevant
+      data governance approvals. No public endpoints are published.
+    humanURL: https://data.uq.edu.au/explore-and-access-data/central-integration-platform
+    tags: [ Integration, Enterprise Data, Gated, Access Controlled ]
+    properties:
+      - type: Documentation
+        url: https://data.uq.edu.au/explore-and-access-data/central-integration-platform
+common:
+  - type: Website
+    url: https://www.uq.edu.au/
+  - type: GitHub
+    url: https://github.com/uqlibrary
+  - type: LinkedIn
+    url: https://au.linkedin.com/school/university-of-queensland/
+  - type: DeveloperPortal
+    url: https://data.uq.edu.au/
+  - type: Plans
+    url: plans/uq-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/uq-rate-limits.yml
+  - type: FinOps
+    url: finops/uq-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
