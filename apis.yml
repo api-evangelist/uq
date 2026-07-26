@@ -1,4 +1,3 @@
----
 aid: uq
 name: University of Queensland
 description: >-
@@ -13,9 +12,21 @@ description: >-
   Integration Platform and Data Hub, which are gated and require approval rather
   than offering open self-service APIs.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Free
+  confidence: medium
+  source:
+    - plans
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/uq.png
 url: https://raw.githubusercontent.com/api-evangelist/uq/refs/heads/main/apis.yml
 tags:
   - Education
@@ -27,23 +38,9 @@ tags:
   - Open Data
   - Australia
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-07-25'
 specificationVersion: '0.19'
 apis:
-  - aid: uq:espace-oai
-    name: UQ eSpace OAI-PMH
-    description: >-
-      OAI-PMH metadata harvesting interface for UQ eSpace, the University of
-      Queensland's institutional digital repository of research publications,
-      theses, and datasets. Supports standard OAI-PMH verbs (Identify,
-      ListRecords, ListMetadataFormats, GetRecord) for harvesting scholarly
-      metadata.
-    humanURL: https://espace.library.uq.edu.au/
-    baseURL: https://espace.library.uq.edu.au/oai.php
-    tags: [ Library, Institutional Repository, OAI-PMH, Metadata, Research ]
-    properties:
-      - type: Documentation
-        url: https://espace.library.uq.edu.au/about
   - aid: uq:espace-api
     name: UQ eSpace REST API
     description: >-
@@ -51,7 +48,7 @@ apis:
       and dataset records held in the repository. UQ Library has published API
       documentation with executable examples describing the available endpoints.
     humanURL: https://espace.library.uq.edu.au/view/UQ:10582
-    tags: [ Library, Institutional Repository, REST, Research, Datasets ]
+    tags: [Library, Institutional Repository, REST, Research, Datasets]
     properties:
       - type: Documentation
         url: https://espace.library.uq.edu.au/view/UQ:10582
@@ -65,7 +62,7 @@ apis:
       request access via the Integration Services Team and complete the relevant
       data governance approvals. No public endpoints are published.
     humanURL: https://data.uq.edu.au/explore-and-access-data/central-integration-platform
-    tags: [ Integration, Enterprise Data, Gated, Access Controlled ]
+    tags: [Integration, Enterprise Data, Gated, Access Controlled]
     properties:
       - type: Documentation
         url: https://data.uq.edu.au/explore-and-access-data/central-integration-platform
@@ -92,6 +89,8 @@ common:
     url: json-ld/uq-context.jsonld
   - type: x-blogs
     url: blogs/blogs.json
+  - type: About
+    url: https://espace.library.uq.edu.au/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
