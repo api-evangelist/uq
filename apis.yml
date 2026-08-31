@@ -1,93 +1,253 @@
 aid: uq
 name: University of Queensland
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of Queensland (UQ) is a public research university in Brisbane,
-  Australia, ranked #54 in the QS World University Rankings 2025. UQ's public
-  developer and API footprint is concentrated in its library and research
-  infrastructure: UQ eSpace, the institutional digital repository (built on the
-  Fez/Fedora platform), exposes an OAI-PMH metadata harvesting endpoint and a
-  documented REST API with executable examples. The UQ Library maintains an
-  active public GitHub organisation (uqlibrary) with 150+ repositories. Broader
-  institutional/transactional data access is governed through the Central
-  Integration Platform and Data Hub, which are gated and require approval rather
-  than offering open self-service APIs.
+  The University of Queensland (UQ) is a public research university in Brisbane, Australia, a member
+  of the Group of Eight and of Universitas 21. Like nearly every institution of its kind, UQ is a
+  federation of buyers rather than an API producer, and its programmable footprint has to be
+  described honestly: UQ operates no developer portal, publishes no API terms, and offers no
+  self-service registration for any interface. What it does operate, verified live on 2026-08-30, is
+  three genuinely institution-run machine-readable surfaces. First, a keyless status API at
+  status.its.uq.edu.au serving JSON, RSS and SVG covering 678 systems across 43 service categories.
+  Second, a SAML 2.0 Shibboleth identity provider that self-serves its own EntityDescriptor at
+  idp-prod.uq.edu.au and is registered in the Australian Access Federation alongside 27 UQ-operated
+  service providers. Third, the UQ eSpace repository API on UQ's own host api.library.uq.edu.au,
+  built and run by UQ Library's own engineering team in the open on GitHub, but blocked to outside
+  clients by a CloudFront WAF. UQ's institutional data platforms — the Central Integration Platform
+  and Data Hub — are real but entirely gated behind an access-request process. Its discovery layer
+  (Ex Libris Primo), reading lists (Talis Aspire) and open-data publishing (the Queensland Government
+  CKAN portal) are tenancies on platforms other parties operate, and are recorded here as tenant
+  relationships rather than as UQ contracts.
 type: Index
 deliveryModel:
   model: saas
   open_source: false
-  commercial: true
-  callable_host: false
+  commercial: false
+  callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: medium
+  confidence: high
   source:
-  - pricing
-  generated: '2026-08-28'
-  method: derived
+    - probe
+  generated: '2026-08-30'
+  method: probed
+  note: >-
+    Corrected from callable_host false. https://status.its.uq.edu.au/index.json answered an
+    anonymous keyless GET with HTTP 200 and 86,448 bytes of JSON on 2026-08-30.
 accessModel:
   pricing: free
-  onboarding: unknown
+  onboarding: none
   trial: false
-  try_now: false
-  public: false
-  label: Free
-  confidence: medium
+  try_now: true
+  public: true
+  label: Free · no registration
+  confidence: high
   source:
-    - plans
-  generated: '2026-07-22'
-  method: derived
+    - probe
+  generated: '2026-08-30'
+  method: probed
+  note: >-
+    Applies to the status API only. Every other UQ surface is either WAF-blocked, captcha-gated or
+    behind an access-request process; see x-coverage.
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/uq.png
 url: https://raw.githubusercontent.com/api-evangelist/uq/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
-  - Research
-  - Library
-  - Institutional Repository
-  - Open Data
+  - Higher Education
+  - Education
   - Australia
+  - Group of Eight
+  - Research
+  - Institutional Repository
+  - Identity Federation
+  - Status
+  - Library
+  - Research Computing
+  - Open Data
 created: '2026-06-03'
-modified: '2026-07-25'
+modified: '2026-08-30'
 specificationVersion: '0.23'
 apis:
+  - aid: uq:status-api
+    name: UQ Status API
+    x-operator: institution
+    x-operator-evidence: >-
+      status.its.uq.edu.au is under uq.edu.au, the institution's own registrable domain; UQ ITS runs
+      the deployment and the content is UQ's own service inventory. The response format is that of
+      cState 5.3, an open-source status-page generator UQ self-hosts — a platform choice, not an
+      outsourced service.
+    description: >-
+      Keyless read-only JSON, RSS and SVG feeds describing the operational state of 678 University of
+      Queensland systems across 43 service categories, plus every published incident. All five
+      endpoints returned HTTP 200 to an anonymous GET on 2026-08-30. This is the only openly callable
+      interface the institution operates.
+    baseURL: https://status.its.uq.edu.au
+    humanURL: https://status.its.uq.edu.au/
+    tags: [Status, Operations, JSON, RSS, Keyless]
+    properties:
+      - type: OpenAPI
+        url: openapi/uq-status-openapi.yml
+      - type: x-openapi-original
+        url: openapi/_original/uq-status-openapi.yml
+      - type: x-json-schema
+        url: json-schema/uq-status-index-schema.json
+      - type: x-examples
+        url: examples/uq-status-index-example.json
+      - type: Authentication
+        url: authentication/uq-status-authentication.yml
+      - type: x-errors
+        url: errors/uq-status-errors.yml
+      - type: x-rules
+        url: rules/uq-status-rules.yml
+      - type: x-lifecycle
+        url: lifecycle/uq-status-lifecycle.yml
+      - type: Documentation
+        url: https://status.its.uq.edu.au/
+  - aid: uq:identity-federation
+    name: UQ Identity Provider (SAML 2.0 / Shibboleth)
+    x-operator: institution
+    x-operator-evidence: >-
+      UQ self-serves its own SAML EntityDescriptor from idp-prod.uq.edu.au (HTTP 200,
+      application/xml, 4,423 bytes) and asserts shibmd:Scope uq.edu.au. The Australian Access
+      Federation is the registry the entity is published through, not the operator of the service.
+    description: >-
+      UQ operates a SAML 2.0 Shibboleth identity provider, entityID
+      urn:mace:federation.org.au:testfed:uq.edu.au, with SSO endpoints for the HTTP-Redirect,
+      HTTP-POST and HTTP-POST-SimpleSign bindings. The entity is present in the live Australian
+      Access Federation aggregate (360 entities) together with 27 UQ-operated service providers,
+      giving UQ eduGAIN reach. Institution-operated by definition and machine-readable — this is the
+      most substantial standards conformance UQ holds.
+    baseURL: https://idp-prod.uq.edu.au
+    humanURL: https://idp-prod.uq.edu.au/idp/shibboleth
+    tags: [Identity, SAML, Shibboleth, Federation, eduGAIN, AAF]
+    properties:
+      - type: x-conformance
+        url: conformance/uq-conformance.yml
+      - type: Documentation
+        url: https://idp-prod.uq.edu.au/idp/shibboleth
+      - type: x-federation-metadata
+        url: https://md.aaf.edu.au/aaf-metadata.xml
   - aid: uq:espace-api
     name: UQ eSpace REST API
+    x-operator: institution
+    x-operator-evidence: >-
+      api.library.uq.edu.au is under uq.edu.au. The client that calls it, uqlibrary/fez-frontend, is
+      UQ Library's own open-source code and names this host in its example.env; the operations
+      (records, fez-authors, journals, vocabularies, orcid) are UQ eSpace's own resources, not a
+      vendor product's.
     description: >-
-      REST API for UQ eSpace providing programmatic access to research outputs
-      and dataset records held in the repository. UQ Library has published API
-      documentation with executable examples describing the available endpoints.
+      REST API behind UQ eSpace, the institutional repository for UQ research outputs and datasets,
+      operated on UQ's own host by UQ Library. Not callable from outside the institution: every path
+      probed on 2026-08-30 returned HTTP 403 "Request blocked" from CloudFront. No contract is saved
+      here because none could be fetched or verified — the interface is legible only through UQ
+      Library's own front-end source. UQ publishes no OpenAPI for it.
+    baseURL: https://api.library.uq.edu.au
     humanURL: https://espace.library.uq.edu.au/view/UQ:10582
-    tags: [Library, Institutional Repository, REST, Research, Datasets]
+    tags: [Library, Institutional Repository, REST, Research, Datasets, ORCID, Bot Blocked]
     properties:
       - type: Documentation
         url: https://espace.library.uq.edu.au/view/UQ:10582
       - type: GitHub
-        url: https://github.com/uqlibrary
+        url: https://github.com/uqlibrary/fez-frontend
+      - type: x-sitemap
+        url: https://espace.library.uq.edu.au/sitemap/sitemap-index.xml
   - aid: uq:central-integration
     name: Central Integration Platform
+    x-operator: institution
+    x-operator-evidence: >-
+      Named by UQ as its own integration platform, run by the UQ ITS Integration Services Team.
     description: >-
-      UQ's API platform for transactional and business data, used to integrate
-      institutional systems. Access is not open or self-service; developers must
-      request access via the Integration Services Team and complete the relevant
-      data governance approvals. No public endpoints are published.
-    humanURL: https://data.uq.edu.au/explore-and-access-data/central-integration-platform
-    tags: [Integration, Enterprise Data, Gated, Access Controlled]
+      UQ's internal API platform for transactional and business data, paired with the Data Hub
+      synchronisation platform. Access is neither open nor self-service: consumers request access
+      through the Integration Services Team and complete data governance approvals. No public
+      endpoints, no published contract, no catalogue. The documentation page that the previous
+      profile pointed at has moved and now returns HTTP 403 "Access denied" to anonymous clients, so
+      that pointer has been removed rather than left in place as a claim.
+    humanURL: https://its.uq.edu.au/
+    tags: [Integration, Enterprise Data, Gated, Access Controlled, No Public Endpoints]
     properties:
-      - type: Documentation
-        url: https://data.uq.edu.au/explore-and-access-data/central-integration-platform
+      - type: Support
+        url: https://its.uq.edu.au/
+  - aid: uq:qld-open-data
+    name: Queensland Government Open Data Portal (UQ organisation)
+    x-operator: tenant
+    x-operator-evidence: >-
+      data.qld.gov.au is operated by the Queensland Government on CKAN. UQ is a publishing
+      organisation on it under the slug university-of-queensland. UQ's data, the state's contract.
+    description: >-
+      UQ has no open data portal of its own. It publishes as an organisation on the Queensland
+      Government's CKAN portal, where a live keyless package_search on 2026-08-30 returned a count of
+      2 datasets. Recorded as a tenant relationship so the fact is legible without crediting UQ with
+      CKAN's engineering. The CKAN Action API contract belongs in the portal operator's record, not
+      here.
+    humanURL: https://www.data.qld.gov.au/organization/university-of-queensland
+    tags: [Open Data, CKAN, Tenant, Government Portal]
+    properties:
+      - type: APIReference
+        url: https://www.data.qld.gov.au/api/3/action/package_search?fq=organization:university-of-queensland
+  - aid: uq:library-discovery
+    name: UQ Library discovery (Ex Libris Primo VE tenancy)
+    x-operator: tenant
+    x-operator-evidence: >-
+      search.library.uq.edu.au is UQ's own hostname but redirects to /discovery/search?vid=61UQ_INST:61UQ,
+      the Ex Libris Primo VE tenant view code. Ex Libris runs the platform and wrote the contract; UQ
+      supplies the collection and the branding. Host-based attribution would wrongly read this as
+      institution-operated, which is exactly the failure this profile guards against.
+    description: >-
+      UQ's library discovery layer, a Primo VE tenancy on Ex Libris. No contract is saved under UQ —
+      any Primo or Alma API definition belongs to Ex Libris and scores against Ex Libris.
+    humanURL: https://search.library.uq.edu.au/
+    tags: [Library, Discovery, Primo, Ex Libris, Tenant]
+  - aid: uq:reading-lists
+    name: UQ Reading Lists (Talis Aspire tenancy)
+    x-operator: tenant
+    x-operator-evidence: >-
+      uq.rl.talis.com is an institution-specific subdomain on Talis's own platform — the textbook
+      tenant shape. Live HTTP 200 on 2026-08-30.
+    description: >-
+      UQ course reading lists hosted on Talis Aspire. Recorded as a tenant relationship; the Talis
+      Aspire APIs are Talis's contract, not UQ's.
+    humanURL: https://uq.rl.talis.com/
+    tags: [Library, Reading Lists, Talis Aspire, Tenant]
 common:
-  - type: DomainSecurity
-    url: security/uq-domain-security.yml
   - type: Website
     url: https://www.uq.edu.au/
-  - type: GitHub
+  - type: GitHubOrganization
     url: https://github.com/uqlibrary
   - type: LinkedIn
     url: https://au.linkedin.com/school/university-of-queensland/
-  - type: DeveloperPortal
-    url: https://data.uq.edu.au/
+  - type: Status
+    url: https://status.its.uq.edu.au/
+  - type: Blog
+    url: https://news.uq.edu.au/
+  - type: Support
+    url: https://support.my.uq.edu.au/
+  - type: PrivacyPolicy
+    url: https://www.uq.edu.au/legal/copyright-privacy-disclaimer/
+  - type: TermsOfService
+    url: https://www.uq.edu.au/legal/website-terms-of-use/
+  - type: IdentityFederation
+    url: https://idp-prod.uq.edu.au/idp/shibboleth
+  - type: ResearchRepository
+    url: https://espace.library.uq.edu.au/
+  - type: LibraryCatalog
+    url: https://search.library.uq.edu.au/
+  - type: CourseCatalog
+    url: https://study.uq.edu.au/
+  - type: ResearchComputing
+    url: https://rcc.uq.edu.au/
+  - type: OpenData
+    url: https://www.data.qld.gov.au/organization/university-of-queensland
+  - type: AIPolicy
+    url: https://itali.uq.edu.au/teaching-guidance/artificial-intelligence-ai-and-learning-and-assessment
+  - type: AITooling
+    url: https://ai.uq.edu.au/
+  - type: About
+    url: https://about.uq.edu.au/
+  - type: DomainSecurity
+    url: security/uq-domain-security.yml
   - type: Plans
     url: plans/uq-plans-pricing.yml
   - type: RateLimits
@@ -96,12 +256,65 @@ common:
     url: finops/uq-finops.yml
   - type: Review
     url: review.yml
+  - type: x-conformance
+    url: conformance/uq-conformance.yml
+  - type: x-vocabulary
+    url: vocabulary/uq-vocabulary.yml
   - type: x-json-ld
     url: json-ld/uq-context.jsonld
   - type: x-blogs
     url: blogs/blogs.json
-  - type: About
-    url: https://espace.library.uq.edu.au/
+x-coverage:
+  state: covered
+  reason: covered
+  generated: '2026-08-30'
+  method: probed
+  detail: >-
+    Three institution-operated machine-readable surfaces were found, fetched and verified: the UQ
+    Status API (keyless JSON/RSS/SVG, 678 systems), UQ's self-served SAML 2.0 Shibboleth
+    EntityDescriptor, and the UQ eSpace REST API on UQ's own host. Coverage is nonetheless bounded by
+    three real access barriers on UQ's side, all recorded below rather than reported as absence:
+    api.library.uq.edu.au answers every path with a CloudFront "Request blocked" 403;
+    programs-courses.uq.edu.au answers GET with 405 and x-amzn-waf-action captcha; data.uq.edu.au
+    301-redirects into uq.sharepoint.com behind Microsoft Entra sign-in and its Central Integration
+    Platform page now returns 403 Access denied. Two prior claims were corrected. The OAI-PMH
+    endpoint the previous description asserted could not be reproduced — /oai.php, /oai2,
+    /oai2.php and /oai/request all return the eSpace SPA shell, not an OAI-PMH response, and the
+    re3data record making the claim still describes the retired Fez/Fedora stack. The
+    DeveloperPortal pointer at data.uq.edu.au was removed: UQ operates no developer portal.
+    Unofficial third-party UQ course scrapers on GitHub were found and deliberately not credited —
+    they are neither on an institution domain nor institution-endorsed.
+  evidence:
+    - url: https://status.its.uq.edu.au/index.json
+      status: 200
+    - url: https://status.its.uq.edu.au/issues/index.json
+      status: 200
+    - url: https://status.its.uq.edu.au/index.xml
+      status: 200
+    - url: https://idp-prod.uq.edu.au/idp/shibboleth
+      status: 200
+    - url: https://md.aaf.edu.au/aaf-metadata.xml
+      status: 200
+    - url: https://espace.library.uq.edu.au/sitemap/sitemap-index.xml
+      status: 200
+    - url: https://www.data.qld.gov.au/api/3/action/package_search?fq=organization:university-of-queensland
+      status: 200
+    - url: https://api.library.uq.edu.au/records/types
+      status: 403
+      note: CloudFront "Request blocked" — WAF, not authentication. Live host, unreadable from outside.
+    - url: https://programs-courses.uq.edu.au/
+      status: 405
+      note: 'awselb/2.0 with x-amzn-waf-action: captcha. Course catalog exists; machine access refused.'
+    - url: https://data.uq.edu.au/access-and-share-data/central-integration-platform
+      status: 403
+      note: Access denied — the previous profile's documentation pointer, now dead. Removed.
+    - url: https://espace.library.uq.edu.au/oai.php?verb=Identify
+      status: 403
+      note: Returns the eSpace SPA shell. The asserted OAI-PMH endpoint could not be reproduced.
+    - url: https://www.uq.edu.au/.well-known/security.txt
+      status: 404
+    - url: https://www.uq.edu.au/llms.txt
+      status: 404
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

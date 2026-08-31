@@ -2,14 +2,20 @@
   "repo": "uq",
   "feeds": [
     {
-      "source": "https://news.uq.edu.au/",
+      "source": "https://news.uq.edu.au/topics/university-news",
       "feed_url": "https://news.uq.edu.au/topics/university-news",
-      "title": "UQ News",
+      "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
+    },
+    {
+      "source": "https://status.its.uq.edu.au/",
+      "feed_url": "https://status.its.uq.edu.au/index.xml",
+      "title": "",
+      "saved": 4,
+      "method": "discovered"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-08-22T20:08:02Z"
+  "post_count": 4,
+  "fetched": "2026-08-30T22:33:40Z"
 }
