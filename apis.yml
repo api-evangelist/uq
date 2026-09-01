@@ -85,7 +85,17 @@ apis:
       interface the institution operates.
     baseURL: https://status.its.uq.edu.au
     humanURL: https://status.its.uq.edu.au/
-    tags: [Status, Operations, JSON, RSS, Keyless]
+    tags:
+    - Status
+    - JSON
+    - RSS
+    - Keyless
+    tags_raw:
+    - Status
+    - Operations
+    - JSON
+    - RSS
+    - Keyless
     properties:
       - type: OpenAPI
         url: openapi/uq-status-openapi.yml
