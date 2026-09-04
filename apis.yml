@@ -49,7 +49,7 @@ accessModel:
   note: >-
     Applies to the status API only. Every other UQ surface is either WAF-blocked, captcha-gated or
     behind an access-request process; see x-coverage.
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/uq.png
 url: https://raw.githubusercontent.com/api-evangelist/uq/refs/heads/main/apis.yml
