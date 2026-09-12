@@ -2,6 +2,13 @@
   "repo": "uq",
   "feeds": [
     {
+      "source": "https://status.its.uq.edu.au/",
+      "feed_url": "https://status.its.uq.edu.au/index.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
       "source": "https://news.uq.edu.au/topics/university-news",
       "feed_url": "https://news.uq.edu.au/topics/university-news",
       "title": "",
@@ -9,17 +16,15 @@
       "method": "none"
     },
     {
-      "source": "https://status.its.uq.edu.au/",
+      "source": "https://status.its.uq.edu.au/index.xml",
       "feed_url": "https://status.its.uq.edu.au/index.xml",
       "title": "",
-      "saved": 4,
-      "method": "discovered",
-      "nature": "undetermined",
-      "nature_basis": null
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "post_count": 4,
-  "fetched": "2026-08-30T22:33:40Z",
+  "post_count": 47,
+  "fetched": "2026-09-06T19:17:18Z",
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
   "feed_nature_note": "Whether these posts are the vendor publishing or its support community, decided on the URL path grammar of the saved posts -- not the hostname, which carries both on Khoros, and not author diversity, which flags large vendor blogs as forums. 'undetermined' means undetermined."
