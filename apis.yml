@@ -166,6 +166,11 @@ apis:
   tags:
   - Open Data
   - CKAN
+  - Tenants
+  - Government Portal
+  tags_raw:
+  - Open Data
+  - CKAN
   - Tenant
   - Government Portal
   properties:
@@ -189,6 +194,12 @@ apis:
   - Discovery
   - Primo
   - Ex Libris
+  - Tenants
+  tags_raw:
+  - Library
+  - Discovery
+  - Primo
+  - Ex Libris
   - Tenant
 - aid: uq:reading-lists
   name: UQ Reading Lists (Talis Aspire tenancy)
@@ -201,6 +212,11 @@ apis:
     APIs are Talis's contract, not UQ's.
   humanURL: https://uq.rl.talis.com/
   tags:
+  - Library
+  - Reading Lists
+  - Talis Aspire
+  - Tenants
+  tags_raw:
   - Library
   - Reading Lists
   - Talis Aspire
