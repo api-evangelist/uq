@@ -1,0 +1,103 @@
+conformance: '0.1'
+generated: '2026-08-30'
+method: probed
+regime: education
+regime_standards_checked:
+  - scim
+  - lti
+  - oneroster
+  - ed-fi
+  - caliper
+  - qti
+  - oai-pmh
+  - shibboleth
+  - saml
+  - orcid
+  - datacite
+  - crossref
+note: >-
+  Reward-only. A standard appears under `conformant` only where a machine-readable artifact was
+  fetched and read on 2026-08-30. Standards UQ plausibly uses but for which no artifact could be
+  retrieved are listed under `claimed_unverified` and earn nothing.
+conformant:
+  - standard: saml
+    version: SAML 2.0
+    x-operator: institution
+    surface: UQ Identity Provider
+    evidence:
+      - url: https://idp-prod.uq.edu.au/idp/shibboleth
+        status: 200
+        content_type: application/xml
+        detail: >-
+          UQ self-serves its own SAML 2.0 EntityDescriptor (4,423 bytes) from its own host.
+          entityID urn:mace:federation.org.au:testfed:uq.edu.au, protocolSupportEnumeration
+          urn:oasis:names:tc:SAML:2.0:protocol, scope uq.edu.au.
+      - url: https://md.aaf.edu.au/aaf-metadata.xml
+        status: 200
+        detail: >-
+          The same entity is present in the live Australian Access Federation aggregate
+          (3,178,415 bytes, 360 entities), DisplayName "The University of Queensland", alongside
+          27 UQ-operated Service Providers.
+  - standard: shibboleth
+    x-operator: institution
+    surface: UQ Identity Provider
+    evidence:
+      - url: https://idp-prod.uq.edu.au/idp/shibboleth
+        status: 200
+        detail: >-
+          Shibboleth IdP endpoint layout (/idp/profile/SAML2/{POST,Redirect,POST-SimpleSign}/SSO)
+          served from UQ's own host; shibmd:Scope of uq.edu.au declared in the metadata.
+      - url: https://idp-prod.uq.edu.au/idp/profile/SAML2/Redirect/SSO
+        status: 500
+        detail: >-
+          Live Shibboleth IdP error page returned to a bare GET with no SAML AuthnRequest — the
+          expected response, and proof the profile endpoint is deployed rather than merely declared.
+  - standard: orcid
+    x-operator: institution
+    surface: UQ eSpace (api.library.uq.edu.au)
+    evidence:
+      - url: https://raw.githubusercontent.com/uqlibrary/fez-frontend/master/src/repositories/routes.js
+        status: 200
+        detail: >-
+          UQ Library's own repository front end declares ORCID operations against UQ's API host —
+          `orcid/{userId}/request` (line 176) and `external/orcid/jobs/sync` (line 498).
+      - url: https://www.re3data.org/repository/r3d100011852
+        status: 200
+        detail: re3data records ORCID as an author identifier system for UQ eSpace.
+    note: >-
+      Integration is confirmed from UQ's own source; the API responses themselves could not be read
+      because api.library.uq.edu.au is WAF-blocked to outside clients.
+claimed_unverified:
+  - standard: oai-pmh
+    claim_source: https://www.re3data.org/repository/r3d100011852
+    claimed_endpoint: http://espace.library.uq.edu.au/oai.php
+    evidence:
+      - url: https://espace.library.uq.edu.au/oai.php?verb=Identify
+        status: 403
+        detail: >-
+          Returns the eSpace single-page-application HTML shell, not an OAI-PMH Identify response.
+          /oai2, /oai2.php, /oai/request and the api.library.uq.edu.au equivalents were also probed
+          and none returned OAI-PMH XML. The re3data record still describes the legacy Fez/Fedora
+          stack; the endpoint appears to have gone with the React rebuild.
+    verdict: not_conformant_on_evidence
+    note: >-
+      Recorded so the claim is not silently re-credited. This is the correction that matters most
+      here — the previous profile asserted a live OAI-PMH endpoint in its description.
+  - standard: datacite
+    claim_source: https://www.re3data.org/repository/r3d100011852
+    detail: >-
+      re3data lists DOI as the PID system for UQ eSpace and UQ mints DOIs for datasets, but no
+      DataCite-conformant machine surface operated by UQ could be fetched. Not credited.
+    verdict: unverified
+not_found:
+  - scim
+  - lti
+  - oneroster
+  - ed-fi
+  - caliper
+  - qti
+  - crossref
+not_found_note: >-
+  No public artifact for any of these was retrievable. LTI and Caliper are plausible inside UQ's
+  Blackboard/learn.uq.edu.au estate (learn.uq.edu.au appears in the AAF metadata as a UQ Service
+  Provider), but that estate is authenticated and its tooling is a vendor's, so nothing is credited.

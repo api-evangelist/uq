@@ -1,0 +1,32 @@
+authentication: '0.1'
+generated: '2026-08-30'
+method: probed
+source: https://status.its.uq.edu.au/index.json
+x-operator: institution
+apis:
+  - name: UQ Status API
+    base_url: https://status.its.uq.edu.au
+    schemes:
+      - type: none
+        required: false
+        description: >-
+          No authentication of any kind. All five documented endpoints returned HTTP 200 to an
+          anonymous, keyless GET on 2026-08-30 with no cookie, header or token. There is no
+          registration, no API key, no OAuth flow and no rate-limit header in the response.
+    evidence:
+      - url: https://status.its.uq.edu.au/index.json
+        status: 200
+        note: keyless GET, application/json, 86,448 bytes
+      - url: https://status.its.uq.edu.au/issues/index.json
+        status: 200
+        note: keyless GET, 36,667 bytes
+      - url: https://status.its.uq.edu.au/issues/19999/index.json
+        status: 200
+        note: keyless GET, 360 bytes
+notes:
+  - >-
+    Every other UQ surface reviewed in this run is the opposite of this one. api.library.uq.edu.au
+    returns HTTP 403 "Request blocked" from CloudFront to any outside client; data.uq.edu.au
+    301-redirects to uq.sharepoint.com behind Microsoft Entra sign-in; programs-courses.uq.edu.au
+    answers GET with HTTP 405 and x-amzn-waf-action: captcha. None of those are open surfaces and
+    none carry a published authentication scheme.

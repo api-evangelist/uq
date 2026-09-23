@@ -1,0 +1,114 @@
+{
+  "_provenance": {
+    "generated": "2026-08-30",
+    "method": "probed",
+    "source": "https://status.its.uq.edu.au/index.json",
+    "note": "Verbatim excerpt of a live keyless HTTP 200 response captured 2026-08-30. categories[] truncated to 3 of 43 and systems[] to 5 of 678; every retained value is unmodified.",
+    "x-operator": "institution"
+  },
+  "response": {
+    "is": "index",
+    "cStateVersion": "5.3",
+    "apiVersion": "2.0",
+    "title": "UQ Status",
+    "languageCodeHTML": "en",
+    "languageCode": "en",
+    "baseURL": "https://status.its.uq.edu.au",
+    "description": "If a service is down or experiencing issues, [let us know](https://staff.uq.edu.au/information-and-services/information-technology/it-support)",
+    "summaryStatus": "disrupted",
+    "categories": [
+      {
+        "name": "_Global",
+        "hideTitle": true,
+        "closedByDefault": false
+      },
+      {
+        "name": "Advancement Management",
+        "description": "Advancement Management builds understanding and support for the universitys vision and mission, long-term investment, engagement, participation and philanthropic support.",
+        "hideTitle": false,
+        "closedByDefault": true
+      },
+      {
+        "name": "Applications",
+        "description": "Applications",
+        "hideTitle": false,
+        "closedByDefault": true
+      }
+    ],
+    "systems": [
+      {
+        "name": "AARNet DDoS Protection",
+        "category": "Information & Communication Technology Management",
+        "status": "ok",
+        "unresolvedIssues": []
+      },
+      {
+        "name": "AARNet SOC - Microsoft",
+        "category": "Information Management",
+        "status": "ok",
+        "unresolvedIssues": []
+      },
+      {
+        "name": "AD Envoy RPC API",
+        "category": "Information Management",
+        "status": "ok",
+        "unresolvedIssues": []
+      },
+      {
+        "name": "CMS - ITS Drupal 7",
+        "category": "Information Management",
+        "status": "disrupted",
+        "unresolvedIssues": [
+          {
+            "is": "issue",
+            "title": "  Reduced Functionality on UQs Drupal 7 Websites",
+            "createdAt": "2026-08-12 04:07:00 +0000 UTC",
+            "lastMod": "2026-08-12 04:07:00 +0000 UTC",
+            "permalink": "https://status.its.uq.edu.au/issues/19999/",
+            "severity": "disrupted",
+            "resolved": false,
+            "informational": false,
+            "resolvedAt": "<no value>",
+            "affected": [
+              "CMS - ITS Drupal 7"
+            ],
+            "filename": "19999.md"
+          }
+        ]
+      },
+      {
+        "name": "UQ Authenticate",
+        "category": "Information Management",
+        "status": "disrupted",
+        "unresolvedIssues": [
+          {
+            "is": "issue",
+            "title": " Login disruption to some sites",
+            "createdAt": "2026-08-04 21:19:00 +0000 UTC",
+            "lastMod": "2026-08-04 21:19:00 +0000 UTC",
+            "permalink": "https://status.its.uq.edu.au/issues/19990/",
+            "severity": "disrupted",
+            "resolved": false,
+            "informational": false,
+            "resolvedAt": "<no value>",
+            "affected": [
+              "UQ Authenticate"
+            ],
+            "filename": "19990.md"
+          }
+        ]
+      }
+    ],
+    "buildDate": "2026-08-30",
+    "buildTime": "21:00",
+    "buildTimezone": "UTC",
+    "colorBrand": "#51247a",
+    "colorOk": "#008000",
+    "colorDisrupted": "#fbb800",
+    "colorDown": "#951126",
+    "colorNotice": "#24478f",
+    "alwaysKeepBrandColor": "true",
+    "logo": "https://status.its.uq.edu.au/logo.svg",
+    "googleAnalytics": "UA-00000000-1"
+  }
+}

@@ -1,0 +1,35 @@
+lifecycle: '0.1'
+generated: '2026-08-30'
+method: derived
+source: https://status.its.uq.edu.au/index.json
+x-operator: institution
+api: UQ Status API
+versioning:
+  declared: true
+  where: response body
+  fields:
+    - name: apiVersion
+      value: '2.0'
+      note: Emitted in every index and issue document.
+    - name: cStateVersion
+      value: '5.3'
+      note: Version of the underlying open-source generator, not of UQ's interface.
+  in_path: false
+  in_header: false
+  note: >-
+    There is no /v1 or /v2 path segment and no version header. A consumer detects version drift only
+    by reading apiVersion out of the payload.
+freshness:
+  fields: [buildDate, buildTime, buildTimezone]
+  observed: '2026-08-30 21:00 UTC'
+  note: The document is regenerated on each site build and stamps its own build time.
+deprecation:
+  policy_published: false
+  sunset_header: not observed
+  changelog: none published for the interface itself
+stability:
+  assessment: informal
+  rationale: >-
+    Live, keyless and stable in shape across the endpoints probed, but UQ publishes no contract, no
+    terms of use for the feed, no deprecation policy and no support channel for machine consumers.
+    Treat it as a public convenience feed, not a committed interface.

@@ -1,0 +1,145 @@
+openapi: 3.2.0
+info:
+  title: UQ Status Issues API
+  version: '2.0'
+  summary: Keyless read-only JSON, RSS and SVG feeds for the University of Queensland IT service status page.
+  description: The University of Queensland's Information Technology Services publishes the operational status of 678 institutional systems across 43 service categories at status.its.uq.edu.au, and serves that same data as machine-readable JSON, RSS and SVG alongside the HTML page.
+  contact:
+    name: UQ Information Technology Services
+    url: https://status.its.uq.edu.au/
+  license:
+    name: Not stated
+    url: https://www.uq.edu.au/legal/copyright-privacy-disclaimer/
+  x-operator: institution
+  x-operator-evidence: status.its.uq.edu.au is under uq.edu.au, the institution's own registrable domain; the page identifies UQ ITS as the operator and lists only UQ systems.
+  x-platform: cState 5.3 (open-source, self-hosted by UQ ITS)
+  x-provenance:
+    method: derived
+    source: https://status.its.uq.edu.au/index.json
+    generated: '2026-08-30'
+    note: Derived by API Evangelist from live keyless responses observed on 2026-08-30. Paths, status codes, media types and schema fields are transcribed from actual responses; nothing is inferred beyond what was returned.
+servers:
+- url: https://status.its.uq.edu.au
+  description: Production status site (public, no authentication)
+tags:
+- name: Issues
+  description: Incident records, open and resolved.
+paths:
+  /issues/index.json:
+    get:
+      tags:
+      - Issues
+      operationId: listIssues
+      summary: List every published incident
+      responses:
+        '200':
+          description: Issue list document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /issues/{issueId}/index.json:
+    get:
+      tags:
+      - Issues
+      operationId: getIssue
+      summary: Retrieve one incident by its identifier
+      parameters:
+      - name: issueId
+        in: path
+        required: true
+        description: Numeric incident identifier, as seen in an issue permalink.
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        example: '19999'
+      responses:
+        '200':
+          description: Issue document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    StatusValue:
+      type: string
+      title: StatusValue
+      description: Operational state vocabulary used for both systems and issue severity.
+      enum:
+      - ok
+      - disrupted
+      - down
+      - notice
+    Issue:
+      type: object
+      title: Issue
+      required:
+      - is
+      - title
+      - createdAt
+      - permalink
+      - severity
+      - resolved
+      properties:
+        is:
+          type: string
+          const: issue
+        title:
+          type: string
+        createdAt:
+          type: string
+          description: Go time layout as emitted, e.g. 2026-08-12 04:07:00 +0000 UTC — not RFC 3339.
+          example: 2026-08-12 04:07:00 +0000 UTC
+        lastMod:
+          type: string
+        permalink:
+          type: string
+          format: uri
+        severity:
+          $ref: '#/components/schemas/StatusValue'
+        resolved:
+          type: boolean
+        informational:
+          type: boolean
+        resolvedAt:
+          type: string
+          description: Literal string "<no value>" when the issue is unresolved.
+        affected:
+          type: array
+          items:
+            type: string
+        filename:
+          type: string
+    IssueList:
+      type: object
+      title: IssueList
+      required:
+      - is
+      - pages
+      properties:
+        is:
+          type: string
+          const: issues
+        title:
+          type: string
+        baseURL:
+          type: string
+          format: uri
+        description:
+          type: string
+        pages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Issue'
+  responses:
+    NotFound:
+      description: No such document. The site returns the HTML 404 page with an HTTP 404 status rather than a JSON error body — observed on 2026-08-30 for /issues.json and /history/index.json.
+      content:
+        text/html:
+          schema:
+            type: string

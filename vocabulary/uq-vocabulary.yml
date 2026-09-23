@@ -1,0 +1,60 @@
+vocabulary: '0.1'
+generated: '2026-08-30'
+method: derived
+source: https://status.its.uq.edu.au/index.json
+x-operator: institution
+description: >-
+  Controlled values actually observed in University of Queensland machine-readable surfaces on
+  2026-08-30. Nothing here is aspirational — each term was read out of a live response or a live
+  metadata document.
+terms:
+  - term: ok
+    set: status
+    surface: UQ Status API
+    definition: System operating normally.
+  - term: disrupted
+    set: status
+    surface: UQ Status API
+    definition: System degraded or partially available; also used as an issue severity.
+  - term: down
+    set: status
+    surface: UQ Status API
+    definition: System unavailable.
+  - term: notice
+    set: status
+    surface: UQ Status API
+    definition: Informational advisory, not an outage.
+  - term: index
+    set: document_type
+    surface: UQ Status API
+    definition: Value of the `is` discriminator on the status board document.
+  - term: issues
+    set: document_type
+    surface: UQ Status API
+    definition: Value of the `is` discriminator on the incident list document.
+  - term: issue
+    set: document_type
+    surface: UQ Status API
+    definition: Value of the `is` discriminator on a single incident document.
+  - term: urn:mace:federation.org.au:testfed:uq.edu.au
+    set: entity_identifier
+    surface: UQ Identity Provider
+    definition: UQ's SAML 2.0 entityID within the Australian Access Federation.
+  - term: uq.edu.au
+    set: federation_scope
+    surface: UQ Identity Provider
+    definition: shibmd:Scope asserted by UQ's IdP — the affiliation namespace it is authoritative for.
+  - term: 61UQ_INST:61UQ
+    set: tenant_identifier
+    surface: UQ Library discovery (Ex Libris Primo VE)
+    definition: >-
+      Ex Libris institution/view code identifying UQ's tenant on the Primo platform. Recorded to make
+      the tenancy legible — the contract behind it is Ex Libris's, not UQ's.
+  - term: university-of-queensland
+    set: tenant_identifier
+    surface: Queensland Government Open Data Portal (CKAN)
+    definition: CKAN organization slug under which UQ publishes datasets on a portal it does not operate.
+categories_observed:
+  count: 43
+  source: https://status.its.uq.edu.au/index.json
+  note: UQ ITS service categories; 678 individual systems were enumerated in the same response.

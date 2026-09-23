@@ -1,0 +1,227 @@
+openapi: 3.2.0
+info:
+  title: UQ Status API
+  version: '2.0'
+  summary: Keyless read-only JSON, RSS and SVG feeds for the University of Queensland IT service status page.
+  description: The University of Queensland's Information Technology Services publishes the operational status of 678 institutional systems across 43 service categories at status.its.uq.edu.au, and serves that same data as machine-readable JSON, RSS and SVG alongside the HTML page.
+  contact:
+    name: UQ Information Technology Services
+    url: https://status.its.uq.edu.au/
+  license:
+    name: Not stated
+    url: https://www.uq.edu.au/legal/copyright-privacy-disclaimer/
+  x-operator: institution
+  x-operator-evidence: status.its.uq.edu.au is under uq.edu.au, the institution's own registrable domain; the page identifies UQ ITS as the operator and lists only UQ systems.
+  x-platform: cState 5.3 (open-source, self-hosted by UQ ITS)
+  x-provenance:
+    method: derived
+    source: https://status.its.uq.edu.au/index.json
+    generated: '2026-08-30'
+    note: Derived by API Evangelist from live keyless responses observed on 2026-08-30. Paths, status codes, media types and schema fields are transcribed from actual responses; nothing is inferred beyond what was returned.
+servers:
+- url: https://status.its.uq.edu.au
+  description: Production status site (public, no authentication)
+tags:
+- name: Status
+  description: Current operational state of UQ systems.
+paths:
+  /index.json:
+    get:
+      tags:
+      - Status
+      operationId: getStatusIndex
+      summary: Current status of every UQ system
+      description: Returns the whole status board as one document — a summary status, the category list, and one entry per monitored system with its current state and any unresolved issues attached to it.
+      responses:
+        '200':
+          description: Status board document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusIndex'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /index.xml:
+    get:
+      tags:
+      - Status
+      operationId: getStatusFeed
+      summary: RSS 2.0 feed of status issues
+      responses:
+        '200':
+          description: RSS 2.0 feed
+          content:
+            application/rss+xml:
+              schema:
+                type: string
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /index.svg:
+    get:
+      tags:
+      - Status
+      operationId: getStatusBadge
+      summary: Status badge as an SVG image
+      responses:
+        '200':
+          description: SVG badge
+          content:
+            image/svg+xml:
+              schema:
+                type: string
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    StatusIndex:
+      type: object
+      title: StatusIndex
+      required:
+      - is
+      - apiVersion
+      - title
+      - baseURL
+      - summaryStatus
+      - categories
+      - systems
+      properties:
+        is:
+          type: string
+          const: index
+        cStateVersion:
+          type: string
+          description: Version of the underlying open-source status-page generator.
+          example: '5.3'
+        apiVersion:
+          type: string
+          example: '2.0'
+        title:
+          type: string
+          example: UQ Status
+        languageCode:
+          type: string
+          example: en
+        languageCodeHTML:
+          type: string
+          example: en
+        baseURL:
+          type: string
+          format: uri
+          example: https://status.its.uq.edu.au
+        description:
+          type: string
+        summaryStatus:
+          $ref: '#/components/schemas/StatusValue'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        systems:
+          type: array
+          items:
+            $ref: '#/components/schemas/System'
+        buildDate:
+          type: string
+          format: date
+          example: '2026-08-30'
+        buildTime:
+          type: string
+          example: '21:00'
+        buildTimezone:
+          type: string
+          example: UTC
+        logo:
+          type: string
+          format: uri
+    System:
+      type: object
+      title: System
+      required:
+      - name
+      - category
+      - status
+      - unresolvedIssues
+      properties:
+        name:
+          type: string
+          example: AARNet DDoS Protection
+        category:
+          type: string
+          example: Information & Communication Technology Management
+        status:
+          $ref: '#/components/schemas/StatusValue'
+        unresolvedIssues:
+          type: array
+          items:
+            $ref: '#/components/schemas/Issue'
+    StatusValue:
+      type: string
+      title: StatusValue
+      description: Operational state vocabulary used for both systems and issue severity.
+      enum:
+      - ok
+      - disrupted
+      - down
+      - notice
+    Category:
+      type: object
+      title: Category
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: Information Management
+        description:
+          type: string
+        hideTitle:
+          type: boolean
+        closedByDefault:
+          type: boolean
+    Issue:
+      type: object
+      title: Issue
+      required:
+      - is
+      - title
+      - createdAt
+      - permalink
+      - severity
+      - resolved
+      properties:
+        is:
+          type: string
+          const: issue
+        title:
+          type: string
+        createdAt:
+          type: string
+          description: Go time layout as emitted, e.g. 2026-08-12 04:07:00 +0000 UTC — not RFC 3339.
+          example: 2026-08-12 04:07:00 +0000 UTC
+        lastMod:
+          type: string
+        permalink:
+          type: string
+          format: uri
+        severity:
+          $ref: '#/components/schemas/StatusValue'
+        resolved:
+          type: boolean
+        informational:
+          type: boolean
+        resolvedAt:
+          type: string
+          description: Literal string "<no value>" when the issue is unresolved.
+        affected:
+          type: array
+          items:
+            type: string
+        filename:
+          type: string
+  responses:
+    NotFound:
+      description: No such document. The site returns the HTML 404 page with an HTTP 404 status rather than a JSON error body — observed on 2026-08-30 for /issues.json and /history/index.json.
+      content:
+        text/html:
+          schema:
+            type: string

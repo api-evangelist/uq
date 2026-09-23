@@ -1,0 +1,29 @@
+errors: '0.1'
+generated: '2026-08-30'
+method: probed
+source: https://status.its.uq.edu.au/
+x-operator: institution
+summary: >-
+  The UQ Status site is a static build. It has no JSON error envelope: a miss returns the site's HTML
+  404 page with an HTTP 404 status, and the JSON content type is not preserved. Everything below was
+  observed, not assumed.
+codes:
+  - status: 200
+    condition: Document exists.
+    body: JSON (index, issues, single issue), RSS 2.0 (/index.xml) or SVG (/index.svg).
+    evidence:
+      url: https://status.its.uq.edu.au/index.json
+      observed: '2026-08-30'
+  - status: 404
+    condition: Document does not exist.
+    body: HTML 404 page (~27,900 bytes), Content-Type text/html. No machine-readable error object.
+    evidence:
+      url: https://status.its.uq.edu.au/issues.json
+      observed: '2026-08-30'
+    consumer_note: >-
+      A client must branch on Content-Type or on HTTP status, not on parsing the body — a JSON parse
+      of a 404 will throw rather than yield an error object.
+absent:
+  - problem_details_rfc9457: not implemented
+  - error_codes: none published
+  - retry_after: not returned

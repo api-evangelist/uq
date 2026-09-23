@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/uq/main/json-schema/uq-status-index-schema.json",
+  "title": "UQ Status index document",
+  "description": "Schema for the document returned by GET https://status.its.uq.edu.au/index.json.",
+  "x-provenance": {
+    "generated": "2026-08-30",
+    "method": "derived",
+    "source": "https://status.its.uq.edu.au/index.json",
+    "note": "Derived from the live keyless response captured 2026-08-30 and from openapi/uq-status-openapi.yml. UQ does not publish a schema for this endpoint.",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": [
+    "is",
+    "apiVersion",
+    "title",
+    "baseURL",
+    "summaryStatus",
+    "categories",
+    "systems"
+  ],
+  "properties": {
+    "is": {
+      "const": "index"
+    },
+    "cStateVersion": {
+      "type": "string",
+      "examples": [
+        "5.3"
+      ]
+    },
+    "apiVersion": {
+      "type": "string",
+      "examples": [
+        "2.0"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "languageCode": {
+      "type": "string"
+    },
+    "languageCodeHTML": {
+      "type": "string"
+    },
+    "baseURL": {
+      "type": "string",
+      "format": "uri"
+    },
+    "description": {
+      "type": "string"
+    },
+    "summaryStatus": {
+      "$ref": "#/$defs/statusValue"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/category"
+      }
+    },
+    "systems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/system"
+      }
+    },
+    "buildDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "buildTime": {
+      "type": "string"
+    },
+    "buildTimezone": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "$defs": {
+    "statusValue": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "disrupted",
+        "down",
+        "notice"
+      ]
+    },
+    "category": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hideTitle": {
+          "type": "boolean"
+        },
+        "closedByDefault": {
+          "type": "boolean"
+        }
+      }
+    },
+    "system": {
+      "type": "object",
+      "required": [
+        "name",
+        "category",
+        "status",
+        "unresolvedIssues"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/statusValue"
+        },
+        "unresolvedIssues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          }
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": [
+        "is",
+        "title",
+        "createdAt",
+        "permalink",
+        "severity",
+        "resolved"
+      ],
+      "properties": {
+        "is": {
+          "const": "issue"
+        },
+        "title": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "lastMod": {
+          "type": "string"
+        },
+        "permalink": {
+          "type": "string",
+          "format": "uri"
+        },
+        "severity": {
+          "$ref": "#/$defs/statusValue"
+        },
+        "resolved": {
+          "type": "boolean"
+        },
+        "informational": {
+          "type": "boolean"
+        },
+        "resolvedAt": {
+          "type": "string"
+        },
+        "affected": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "filename": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

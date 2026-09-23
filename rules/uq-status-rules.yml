@@ -1,0 +1,48 @@
+rules: '0.1'
+generated: '2026-08-30'
+method: derived
+source: openapi/uq-status-openapi.yml
+x-operator: institution
+description: >-
+  Spectral ruleset asserting the properties of the UQ Status API that were actually observed on
+  2026-08-30. These are API Evangelist's assertions about a UQ surface, not a UQ-published ruleset.
+extends: []
+rules:
+  uq-status-server-is-institution-host:
+    description: The only server must be UQ's own status host — a vendor host here would be a misattribution.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://status\.its\.uq\.edu\.au$'
+  uq-status-operator-declared:
+    description: info must carry x-operator so the surface can never be credited to the wrong party.
+    severity: error
+    given: $.info
+    then:
+      field: x-operator
+      function: truthy
+  uq-status-provenance-declared:
+    description: info must carry x-provenance with a method, because this document was written by API Evangelist and not by UQ.
+    severity: error
+    given: $.info.x-provenance
+    then:
+      field: method
+      function: truthy
+  uq-status-no-security:
+    description: The API is keyless; declaring a security scheme would overstate what UQ operates.
+    severity: warn
+    given: $
+    then:
+      field: components.securitySchemes
+      function: falsy
+  uq-status-operations-documented:
+    description: Every operation carries an operationId and a summary.
+    severity: warn
+    given: $.paths[*][get]
+    then:
+      - field: operationId
+        function: truthy
+      - field: summary
+        function: truthy
