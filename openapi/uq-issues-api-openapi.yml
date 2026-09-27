@@ -66,15 +66,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    StatusValue:
-      type: string
-      title: StatusValue
-      description: Operational state vocabulary used for both systems and issue severity.
-      enum:
-      - ok
-      - disrupted
-      - down
-      - notice
     Issue:
       type: object
       title: Issue
@@ -115,6 +106,15 @@ components:
             type: string
         filename:
           type: string
+    StatusValue:
+      type: string
+      title: StatusValue
+      description: Operational state vocabulary used for both systems and issue severity.
+      enum:
+      - ok
+      - disrupted
+      - down
+      - notice
     IssueList:
       type: object
       title: IssueList

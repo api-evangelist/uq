@@ -22,18 +22,20 @@ description: >-
 type: Index
 deliveryModel:
   model: saas
-  open_source: false
-  commercial: false
+  license_evidence:
+    not_product:
+    - uqlibrary/fez-frontend
+  open_source: unknown
+  commercial: true
   callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: high
+  confidence: low
   source:
-    - probe
-  generated: '2026-08-30'
-  method: probed
-  note: >-
-    Corrected from callable_host false. https://status.its.uq.edu.au/index.json answered an
-    anonymous keyless GET with HTTP 200 and 86,448 bytes of JSON on 2026-08-30.
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 accessModel:
   pricing: free
   onboarding: none
