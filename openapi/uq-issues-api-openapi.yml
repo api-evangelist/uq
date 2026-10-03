@@ -106,15 +106,6 @@ components:
             type: string
         filename:
           type: string
-    StatusValue:
-      type: string
-      title: StatusValue
-      description: Operational state vocabulary used for both systems and issue severity.
-      enum:
-      - ok
-      - disrupted
-      - down
-      - notice
     IssueList:
       type: object
       title: IssueList
@@ -136,6 +127,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Issue'
+    StatusValue:
+      type: string
+      title: StatusValue
+      description: Operational state vocabulary used for both systems and issue severity.
+      enum:
+      - ok
+      - disrupted
+      - down
+      - notice
   responses:
     NotFound:
       description: No such document. The site returns the HTML 404 page with an HTTP 404 status rather than a JSON error body — observed on 2026-08-30 for /issues.json and /history/index.json.

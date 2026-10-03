@@ -73,51 +73,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    StatusValue:
-      type: string
-      title: StatusValue
-      description: Operational state vocabulary used for both systems and issue severity.
-      enum:
-      - ok
-      - disrupted
-      - down
-      - notice
-    System:
-      type: object
-      title: System
-      required:
-      - name
-      - category
-      - status
-      - unresolvedIssues
-      properties:
-        name:
-          type: string
-          example: AARNet DDoS Protection
-        category:
-          type: string
-          example: Information & Communication Technology Management
-        status:
-          $ref: '#/components/schemas/StatusValue'
-        unresolvedIssues:
-          type: array
-          items:
-            $ref: '#/components/schemas/Issue'
-    Category:
-      type: object
-      title: Category
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          example: Information Management
-        description:
-          type: string
-        hideTitle:
-          type: boolean
-        closedByDefault:
-          type: boolean
     Issue:
       type: object
       title: Issue
@@ -158,6 +113,51 @@ components:
             type: string
         filename:
           type: string
+    Category:
+      type: object
+      title: Category
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: Information Management
+        description:
+          type: string
+        hideTitle:
+          type: boolean
+        closedByDefault:
+          type: boolean
+    StatusValue:
+      type: string
+      title: StatusValue
+      description: Operational state vocabulary used for both systems and issue severity.
+      enum:
+      - ok
+      - disrupted
+      - down
+      - notice
+    System:
+      type: object
+      title: System
+      required:
+      - name
+      - category
+      - status
+      - unresolvedIssues
+      properties:
+        name:
+          type: string
+          example: AARNet DDoS Protection
+        category:
+          type: string
+          example: Information & Communication Technology Management
+        status:
+          $ref: '#/components/schemas/StatusValue'
+        unresolvedIssues:
+          type: array
+          items:
+            $ref: '#/components/schemas/Issue'
     StatusIndex:
       type: object
       title: StatusIndex
