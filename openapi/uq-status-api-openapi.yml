@@ -72,92 +72,14 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  schemas:
-    Issue:
-      type: object
-      title: Issue
-      required:
-      - is
-      - title
-      - createdAt
-      - permalink
-      - severity
-      - resolved
-      properties:
-        is:
-          type: string
-          const: issue
-        title:
-          type: string
-        createdAt:
-          type: string
-          description: Go time layout as emitted, e.g. 2026-08-12 04:07:00 +0000 UTC — not RFC 3339.
-          example: 2026-08-12 04:07:00 +0000 UTC
-        lastMod:
-          type: string
-        permalink:
-          type: string
-          format: uri
-        severity:
-          $ref: '#/components/schemas/StatusValue'
-        resolved:
-          type: boolean
-        informational:
-          type: boolean
-        resolvedAt:
-          type: string
-          description: Literal string "<no value>" when the issue is unresolved.
-        affected:
-          type: array
-          items:
+  responses:
+    NotFound:
+      description: No such document. The site returns the HTML 404 page with an HTTP 404 status rather than a JSON error body — observed on 2026-08-30 for /issues.json and /history/index.json.
+      content:
+        text/html:
+          schema:
             type: string
-        filename:
-          type: string
-    Category:
-      type: object
-      title: Category
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          example: Information Management
-        description:
-          type: string
-        hideTitle:
-          type: boolean
-        closedByDefault:
-          type: boolean
-    StatusValue:
-      type: string
-      title: StatusValue
-      description: Operational state vocabulary used for both systems and issue severity.
-      enum:
-      - ok
-      - disrupted
-      - down
-      - notice
-    System:
-      type: object
-      title: System
-      required:
-      - name
-      - category
-      - status
-      - unresolvedIssues
-      properties:
-        name:
-          type: string
-          example: AARNet DDoS Protection
-        category:
-          type: string
-          example: Information & Communication Technology Management
-        status:
-          $ref: '#/components/schemas/StatusValue'
-        unresolvedIssues:
-          type: array
-          items:
-            $ref: '#/components/schemas/Issue'
+  schemas:
     StatusIndex:
       type: object
       title: StatusIndex
@@ -218,10 +140,88 @@ components:
         logo:
           type: string
           format: uri
-  responses:
-    NotFound:
-      description: No such document. The site returns the HTML 404 page with an HTTP 404 status rather than a JSON error body — observed on 2026-08-30 for /issues.json and /history/index.json.
-      content:
-        text/html:
-          schema:
+    System:
+      type: object
+      title: System
+      required:
+      - name
+      - category
+      - status
+      - unresolvedIssues
+      properties:
+        name:
+          type: string
+          example: AARNet DDoS Protection
+        category:
+          type: string
+          example: Information & Communication Technology Management
+        status:
+          $ref: '#/components/schemas/StatusValue'
+        unresolvedIssues:
+          type: array
+          items:
+            $ref: '#/components/schemas/Issue'
+    Category:
+      type: object
+      title: Category
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: Information Management
+        description:
+          type: string
+        hideTitle:
+          type: boolean
+        closedByDefault:
+          type: boolean
+    Issue:
+      type: object
+      title: Issue
+      required:
+      - is
+      - title
+      - createdAt
+      - permalink
+      - severity
+      - resolved
+      properties:
+        is:
+          type: string
+          const: issue
+        title:
+          type: string
+        createdAt:
+          type: string
+          description: Go time layout as emitted, e.g. 2026-08-12 04:07:00 +0000 UTC — not RFC 3339.
+          example: 2026-08-12 04:07:00 +0000 UTC
+        lastMod:
+          type: string
+        permalink:
+          type: string
+          format: uri
+        severity:
+          $ref: '#/components/schemas/StatusValue'
+        resolved:
+          type: boolean
+        informational:
+          type: boolean
+        resolvedAt:
+          type: string
+          description: Literal string "<no value>" when the issue is unresolved.
+        affected:
+          type: array
+          items:
             type: string
+        filename:
+          type: string
+    StatusValue:
+      type: string
+      title: StatusValue
+      description: Operational state vocabulary used for both systems and issue severity.
+      enum:
+      - ok
+      - disrupted
+      - down
+      - notice
